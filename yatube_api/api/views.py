@@ -40,7 +40,7 @@ class CommentViewSet(viewsets.ModelViewSet):
             author=self.request.user,
             post_id=self.kwargs['post_id']
         )
-    
+
     def get_queryset(self):
         return Comment.objects.filter(post_id=self.kwargs['post_id'])
 
