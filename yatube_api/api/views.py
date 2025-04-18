@@ -1,10 +1,10 @@
-from rest_framework import viewsets
+from rest_framework import viewsets, status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.exceptions import PermissionDenied
+from rest_framework.response import Response
 from posts.models import Post, Group, Comment
 from .serializers import PostSerializer, GroupSerializer, CommentSerializer
-from rest_framework import status
-from rest_framework.response import Response
+
 
 class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all()
@@ -24,10 +24,12 @@ class PostViewSet(viewsets.ModelViewSet):
             raise PermissionDenied('Удаление чужого контента запрещено!')
         instance.delete()
 
+
 class GroupViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Group.objects.all()
     serializer_class = GroupSerializer
     permission_classes = [IsAuthenticated]
+
 
 class CommentViewSet(viewsets.ModelViewSet):
     serializer_class = CommentSerializer
